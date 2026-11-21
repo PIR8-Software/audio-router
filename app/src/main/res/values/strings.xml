@@ -1,0 +1,4 @@
+<resources>
+<string name="service_description">Audio Router: on display attach, automatically opens the audio selector popup on the external display, listing only the real outputs enumerated live from the system media output dialog. You choose a row; the app maps the tap to the exact native picker row and the system performs the route change. The app never routes itself, never toggles Bluetooth and never changes volume; no coordinates, no microphone, calls, network or UI logs. The native panel and picker briefly show wherever the OS places them. Sound and hardware hotplug unverified; confirm by ear.</string>
+<string name="selector_switch">Open the audio selector popup on display attach</string>
+</resources>

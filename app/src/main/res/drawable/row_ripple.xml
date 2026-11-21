@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Full-row selectable destination background: opaque sheet surface + Material ripple.
+     Matches the native media output selector's full-row tappable destinations. -->
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="#33FFFFFF">
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#303030" />
+        </shape>
+    </item>
+</ripple>

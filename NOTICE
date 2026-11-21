@@ -1,0 +1,15 @@
+Audio Router
+Copyright (c) 2026 PIR8-Software
+
+Project source, tests, resources created for this app, and documentation are
+under the MIT License. See LICENSE.
+
+The Gradle Wrapper bootstrap JAR at gradle/wrapper/gradle-wrapper.jar is
+NOT covered by that MIT license. It is an unmodified upstream Gradle Wrapper
+binary, Copyright Gradle Inc., Apache License 2.0. The upstream license text
+shipped inside the JAR is also extracted at
+gradle/wrapper/gradle-wrapper-LICENSE. Do not treat that JAR as relicensed.
+
+Declared build/test dependencies are not vendored in this repository and keep
+their own licenses, including Android Gradle Plugin 8.7.3 (Apache License 2.0)
+and JUnit 4.13.2 (Eclipse Public License 1.0, test scope only).

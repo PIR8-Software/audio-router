@@ -1,0 +1,43 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Install-time NORMAL permission (never a runtime prompt/grant): the platform
+         will not deliver ACTION_BOOT_COMPLETED to this receiver without it. -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <application android:allowBackup="false" android:fullBackupContent="false" android:dataExtractionRules="@xml/data_extraction_rules" android:label="Audio Router"
+        android:icon="@mipmap/ic_launcher" android:roundIcon="@mipmap/ic_launcher_round" android:theme="@android:style/Theme.Material.Light.NoActionBar">
+        <activity android:name=".MainActivity" android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <service android:name=".BluetoothGlassesRoutingService" android:exported="true"
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE" android:label="Audio Router">
+            <intent-filter><action android:name="android.accessibilityservice.AccessibilityService" /></intent-filter>
+            <meta-data android:name="android.accessibilityservice" android:resource="@xml/accessibility_service_config" />
+        </service>
+        <!-- Boot/update lifecycle nudges (, ). The ENABLED accessibility service is the
+             lifecycle owner (the system rebinds it after boot + first unlock and
+             after process death); this receiver only routes the real registered
+             manifest signals through the idempotent StartupGate - one popup offer
+             per dock session, never before unlock, never a duplicate. Deliberately
+             NOT direct-boot aware: prefs stay credential-encrypted, nothing starts
+             before user unlock. USER_PRESENT is runtime-registered in the service
+             (not manifest-deliverable on API 26+). -->
+        <receiver android:name=".BootReceiver" android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+            </intent-filter>
+        </receiver>
+        <!-- Own taskAffinity: the popup must NEVER launch into the app task.
+             With the default package affinity, a FLAG_ACTIVITY_NEW_TASK launch
+             reuses the MainActivity task, and finishing the popup resumes that
+             activity. A distinct affinity isolates every selector, attach, and
+             acquisition launch from the app Activity; the service runs headless.
+             exported false: same-UID explicit
+             intents from the service remain valid; external callers are refused (no intent filter). -->
+        <activity android:name=".SelectorPopupActivity" android:exported="false"
+            android:taskAffinity=":selector"
+            android:launchMode="singleTop" android:excludeFromRecents="true" android:theme="@android:style/Theme.Material.Light.Dialog" />
+    </application>
+</manifest>
